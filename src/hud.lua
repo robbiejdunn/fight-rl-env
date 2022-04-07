@@ -11,14 +11,19 @@ function hud:new()
     self.healthWidth = love.graphics.getWidth() / 3
     self.healthHeight = love.graphics.getHeight() / 20
     self.healthY = love.graphics.getHeight() / 10 - self.healthHeight / 2
+    self.round_timer = 60
     return self
+end
+
+function hud:update(round_timer)
+    self.round_timer = round_timer
 end
 
 function hud:draw()
     love.graphics.setColor(0, 1, 0)
     love.graphics.rectangle("fill", love.graphics.getWidth() / 10, self.healthY, self.healthWidth, self.healthHeight)
     love.graphics.setColor(1, 1, 1)
-    -- drawCenteredText(love.graphics.getWidth(), love.graphics.getHeight(), math.floor(roundTimer))
+    drawCenteredText(love.graphics.getWidth(), love.graphics.getHeight(), math.floor(self.round_timer))
 end
 
 return hud
