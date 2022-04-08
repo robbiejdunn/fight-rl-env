@@ -30,28 +30,14 @@ function love.load()
 
     -- load font
     font = love.graphics.setNewFont("assets/FutilePro.ttf", 70)
-    loadBGM()
-    loadStageSounds()
+
     image = love.graphics.newImage("assets/spritesheet.png")
     player.direction = 1
-    -- player:initAnimations()
     player:initAnimations()
     playerTwo:initAnimations()
     local hudClass = require("src/hud")
     hud = hudClass:new()
-end
-
-function loadBGM()
-    bgm = love.audio.newSource("assets/sounds/chee-zee-jungle-by-kevin-macleod-from-filmmusic-io.mp3", "stream")
-    bgm:setLooping(true)
-    bgm:play()
-end
-
-function loadStageSounds()
-    waterfall = love.audio.newSource("assets/sounds/vlc-record-2022-04-06-15h38m19s-zapsplat_nature_forest_ambience_waterfall_close_by_birds.mp3-.mp3", "stream")
-    waterfall:setLooping(true)
-    waterfall:setVolume(0.2)
-    waterfall:play()
+    fs:enter()
 end
 
 function player:addAnimation(

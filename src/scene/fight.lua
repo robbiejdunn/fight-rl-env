@@ -7,6 +7,10 @@ function FightScene:new(stage)
     FightScene.super.new(self)
 end
 
+function FightScene:enter()
+    self.stage:enter()
+end
+
 function FightScene:update(dt)
     self.stage:update(dt)
 end
