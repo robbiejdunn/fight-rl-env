@@ -1,5 +1,5 @@
 local class = require("src/class")
-local anim8 = require("../anim8Custom") 
+local anim8 = require("../anim8") 
 
 local Sprite = class:derive("Sprite")
 
@@ -19,7 +19,7 @@ function Sprite:newAnimation(name, duration, ...)
 end
 
 function Sprite:update(dt)
-    self.animations[self.current_anim]:update(dt)
+    self.animations[self.current_anim]:update(1)
 end
 
 function Sprite:draw(x, y, r, sx, sy)

@@ -19,6 +19,11 @@ local playerTwo = {
     y = 500
 }
 
+local FightScene = require "src/scene/fight"
+local fs = FightScene(waterfall_stage)
+
+local current_scene = fs
+
 function love.load()
     tick.framerate = 60
     tick.rate = 1 / 60
@@ -136,7 +141,7 @@ function playerTwo:initAnimations()
 end
 
 function love.update(dt)
-    waterfall_stage:update(dt)
+    current_scene:update(1)
     -- update timers
     currentMoveTimer = currentMoveTimer + dt
     roundTimer = roundTimer - dt
@@ -155,12 +160,6 @@ end
 function move(dx, dy)
     player.x = player.x + (dx * 1.8)
     player.y = player.y + dy
-end
-
-function tablelength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
 end
 
 function deepcopy(orig)
@@ -241,14 +240,13 @@ function player:updateAnimation()
 end
 
 function love.draw()
-    waterfall_stage:draw()
+    current_scene:draw()
 
-    -- drawHUD()
     hud:draw()
     
-    love.graphics.setBackgroundColor(1, 0, 0, 0.7)
+    -- love.graphics.setBackgroundColor(1, 0, 0, 0.7)
     player.animation:draw(player.spriteSheet, player.x, player.y, 0, 4, 4)
-    love.graphics.setColor(1, 0, 0, 0.7)
+    -- love.graphics.setColor(1, 0, 0, 0.7)
     playerTwo.animation:draw(image, playerTwo.x, playerTwo.y, 0, 4, 4)
-    love.graphics.setColor(1, 1, 1)
+    -- love.graphics.setColor(1, 1, 1)
 end
