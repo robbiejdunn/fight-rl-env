@@ -9,7 +9,8 @@ return {
 
     animations = {
         idle = {
-            duration = 0.1,
+            duration = 64,
+            totalFrames = 8,
             blockingAction = false,
             endOfLoop = nil,
             canInterrupt = true,
@@ -20,7 +21,8 @@ return {
             }
         },
         run = {
-            duration = 0.15,
+            duration = 8,
+            totalFrames = 8,
             blockingAction = false,
             endOfLoop = nil,
             canInterrupt = true,
@@ -32,6 +34,7 @@ return {
         },
         defend = {
             duration = 0.1,
+            totalFrames = 8,
             blockingAction = false,
             endOfLoop = "pauseAtEnd",
             canInterrupt = true,
@@ -42,7 +45,8 @@ return {
             }
         },
         ["1atk"] = {
-            duration = 0.075,
+            duration = 11,
+            totalFrames = 11,
             blockingAction = true,
             endOfLoop = nil,
             canInterrupt = false,
@@ -53,11 +57,8 @@ return {
             }
         },
         spatk = {
-            duration = {
-                ["1-12"] = 1 / 12,
-                ["13-15"] = 0.4 / 3,
-                ["16-18"] = 0.5 / 3
-            },
+            duration = 60,
+            totalFrames = 18,
             blockingAction = true,
             endOfLoop = nil,
             canInterrupt = false,

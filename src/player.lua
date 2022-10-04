@@ -37,9 +37,39 @@ function Player:addAnimation(
     self.states[state].sound = sound
 end
 
+function Player:updateAnimation()
+    -- print("Anim position:", self.animation.position)
+    -- print("Anim timer:", self.animation.timer)
+    -- print("Anim total duration:", self.animation.totalDuration)
+    print()
+    if not self.animations[self.state] then return end
+    self.last_state = self.current_state
+    self.current_state = self.state
+    self.last_direction = self.current_direction
+    self.current_direction = self.direction
+
+    if self.states[self.state].dx_per_frame then
+        self:move(self.states[self.state].dx_per_frame, 0)
+    end
+
+    if self.last_state == self.current_state and self.last_direction == self.current_direction then return end
+    
+    -- print(self.animation.position)
+
+    if self.direction > 0 then
+        self.animation = self.animations[self.state].anim_right
+    elseif self.direction < 0 then
+        self.animation = self.animations[self.state].anim_left
+    end
+end
+
 function Player:animationLoopHandler()
-    self.state = "idle"
-    self:updateAnimation()
+    -- for k, v in pairs(self) do
+    --     print(k, v)
+    -- end
+    -- print(self.state)
+    -- self.state = "idle"
+    -- self:updateAnimation()
 end
 
 function Player:initAnimations()
@@ -58,10 +88,14 @@ function Player:initAnimations()
         local animCfg = character.animations[anim]
         local eol = animCfg.endOfLoop
         if animCfg.blockingAction then eol = self.animationLoopHandler end
+        print(anim, "duration", animCfg.duration)
+        print("totalFrames",  animCfg.totalFrames)
+        print()
+        local frameDuration = tonumber(animCfg.duration) / tonumber(animCfg.totalFrames)
         self:addAnimation(
             anim,
             g,
-            animCfg.duration,
+            frameDuration,
             eol,
             animCfg.canInterrupt,
             animCfg.dx,
@@ -78,23 +112,22 @@ function Player:move(dx, dy)
     self.y = self.y + dy
 end
 
-function Player:updateAnimation()
-    if not self.animations[self.state] then return end
-    self.last_state = self.current_state
-    self.current_state = self.state
-    self.last_direction = self.current_direction
-    self.current_direction = self.direction
-
-    if self.states[self.state].dx_per_frame then
-        self:move(self.states[self.state].dx_per_frame, 0)
-    end
-
-    if self.last_state == self.current_state and self.last_direction == self.current_direction then return end
-
-    if self.direction > 0 then
-        self.animation = self.animations[self.state].anim_right
-    elseif self.direction < 0 then
-        self.animation = self.animations[self.state].anim_left
+function Player:getInput()
+    if self.states[self.state].can_act then
+        local dx = 0
+        local dy = 0
+        if love.keyboard.isDown("v") then
+            self.state = "defend"
+        elseif love.keyboard.isDown("d") then
+            dx = 1
+            self.state = "run"
+        elseif love.keyboard.isDown("a") then
+            dx = -0.5
+            self.state = "run"
+        else
+           self.state = "idle"
+        end
+        move(dx, dy)
     end
 end
 
